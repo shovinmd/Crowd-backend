@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const predictRoutes = require("./routes/predict.routes");
 const feedbackRoutes = require("./routes/feedback.routes");
 const authRoutes = require("./routes/auth.routes");
+const networkRoutes = require("./routes/network.routes");
 
 const app = express();
 app.use(cors());
@@ -30,6 +31,7 @@ mongoose.connect(MONGO_URI, {
 app.use("/auth", authRoutes);
 app.use("/predict", predictRoutes);
 app.use("/feedback", feedbackRoutes);
+app.use("/network", networkRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

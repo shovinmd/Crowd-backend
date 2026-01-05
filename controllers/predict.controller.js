@@ -73,3 +73,60 @@ exports.predictCrowd = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getDashboardData = async (req, res) => {
+  try {
+    const majorRoutes = [
+      "Churchgate - Virar (Western)",
+      "CSMT - Kalyan (Central)",
+      "Metro Line 1 (Versova - Ghatkopar)",
+      "Bus Line 138 (Backbay - CST)"
+    ];
+
+    // Determine current time slot
+    const now = new Date();
+    const hour = now.getHours();
+    let timeSlot = "Normal";
+    if ((hour >= 8 && hour <= 11) || (hour >= 17 && hour <= 20)) {
+      timeSlot = "Peak";
+    }
+
+    const weather = "Sunny"; // Default for dashboard overview
+    const timeScore = getTimeScore(timeSlot);
+    const weatherScore = getWeatherScore(weather);
+
+    const dashboardData = await Promise.all(majorRoutes.map(async (route) => {
+      // Get History
+      let historyScore = 0;
+      const history = await RouteHistory.findOne({ route });
+      if (history) {
+        historyScore = history.avgCrowdScore;
+      }
+
+      // Calculate Score
+      const finalScore = calculateCrowdScore(
+        0, // No specific user feedback for general dashboard
+        timeScore,
+        weatherScore,
+        historyScore
+      );
+
+      const crowdLevel = mapScoreToLevel(finalScore);
+      
+      return {
+        route,
+        level: crowdLevel,
+        // Optional: You could add color codes here or handle in frontend
+      };
+    }));
+
+    res.json({
+      timestamp: now,
+      timeSlot,
+      data: dashboardData
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
