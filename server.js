@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://lacr_admin:YidzNmUlFHi1tPWx@cluster0.ivdzgb1.mongodb.net/crowd";
 
 if (!MONGO_URI) {
   console.error("❌ Error: MONGO_URI is not defined in .env file");
