@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const predictRoutes = require("./routes/predict.routes");
 const feedbackRoutes = require("./routes/feedback.routes");
+const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 app.use(cors());
@@ -26,6 +27,7 @@ mongoose.connect(MONGO_URI, {
 .catch(err => console.log("❌ MongoDB Connection Error:", err));
 
 // Routes
+app.use("/auth", authRoutes);
 app.use("/predict", predictRoutes);
 app.use("/feedback", feedbackRoutes);
 

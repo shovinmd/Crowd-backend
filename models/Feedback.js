@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const FeedbackSchema = new mongoose.Schema({
-  route: { type: String, required: true },
+  userId: { type: String, required: true }, // Device-based user ID
+  mode: { type: String, required: true }, // Train, Metro, Bus, Airport
+  line: { type: String, required: true }, // Western, Central, Metro Line 1, etc.
+  station: { type: String, required: true }, // Station name
   timeSlot: { type: String, required: true },
   weather: { type: String, required: true },
   feedback: { type: String, required: true },
