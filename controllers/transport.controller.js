@@ -3,19 +3,19 @@ const RouteHistory = require("../models/RouteHistory");
 // Transport data structure (can be moved to a database later)
 const transportData = {
   Train: {
-    Western: ['Churchgate', 'Dadar', 'Andheri', 'Borivali'],
-    Central: ['CST', 'Dadar', 'Kurla', 'Thane'],
-    Harbour: ['CST', 'Kurla', 'Vashi']
+    Western: ['Churchgate', 'Marine Lines', 'Dadar', 'Bandra', 'Andheri', 'Jogeshwari', 'Goregaon', 'Malad', 'Kandivali', 'Borivali', 'Mira Road', 'Bhayander', 'Vasai Road', 'Nalasopara', 'Virar'],
+    Central: ['CSMT', 'Byculla', 'Dadar', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Dombivli', 'Kalyan'],
+    Harbour: ['CSMT', 'Masjid', 'Sandhurst Road', 'Dockyard Road', 'Reay Road', 'Cotton Green', 'Kurla', 'Chembur', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel']
   },
   Metro: {
-    'Line 1': ['Versova', 'Andheri', 'Ghatkopar'],
-    'Line 2A': ['Dahisar', 'Borivali', 'Vasai'],
-    'Line 2B': ['Dahisar', 'Borivali', 'Vasai'],
-    'Line 3': ['Aarey', 'Andheri', 'Sakinaka']
+    'Line 1': ['Versova', 'DN Nagar', 'Andheri', 'Western Express', 'Airport Road', 'Marol Naka', 'Saki Naka', 'Asalpha', 'Jagruti Nagar', 'Ghatkopar'],
+    'Line 2A': ['Dahisar East', 'Ovaripada', 'Magathane', 'Poisar', 'Akurli', 'Kurla West', 'Dindoshi', 'Goregaon East', 'Bangur Nagar'],
+    'Line 2B': ['DN Nagar', 'Andheri West', 'Juhu', 'Santacruz', 'Khar', 'Bandra'],
+    'Line 3': ['Aarey', 'SEEPZ', 'Marol', 'MIDC', 'Sakinaka']
   },
   Bus: {
-    'Line 1': ['Colaba', 'Dadar', 'Thane'],
-    'Line 2': ['CST', 'Dadar', 'Thane']
+    'Line 1': ['Colaba', 'Churchgate', 'Fort', 'CST', 'Dadar', 'Thane'],
+    'Line 2': ['CST', 'Byculla', 'Dadar', 'Sion', 'Thane']
   },
   Airport: {
     Domestic: ['Terminal 1', 'Terminal 2'],

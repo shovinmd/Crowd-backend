@@ -7,7 +7,7 @@ const { getTimeScore } = require("../utils/timeUtils");
 
 exports.predictCrowd = async (req, res) => {
   try {
-    const { route, timeSlot, weather, feedback } = req.body;
+    const { mode, line, station, timeSlot, weather, feedback } = req.body;
 
     // 1. Get AI Factor Scores
     const timeScore = getTimeScore(timeSlot);
@@ -16,10 +16,10 @@ exports.predictCrowd = async (req, res) => {
 
     // 2. Get Historical Score (from DB)
     let historyScore = 0;
-    const history = await RouteHistory.findOne({ route });
-    if (history) {
-      historyScore = history.avgCrowdScore;
-    }
+    const history = await RouteHistory.findOne({ mode, line, station });
+  if (history) {
+    historyScore = history.avgCrowdScore;
+  }
 
     // 3. Calculate Final Score (Algorithm 1)
     const finalScore = calculateCrowdScore(
@@ -34,19 +34,19 @@ exports.predictCrowd = async (req, res) => {
 
     // 5. LEARN: Update History if Feedback is provided
     // Algorithm 5: Behavior Pattern Memory
-    if (feedback && feedback !== "Normal") { // Only learn from explicit feedback (or even Normal if provided)
-        // Store Feedback Data
+    if (feedback && feedback !== "Normal") {
         const newFeedback = new Feedback({
-            route,
+            mode,
+            line,
+            station,
             timeSlot,
             weather,
             feedback
         });
         await newFeedback.save();
 
-        // Update Route History
         if (!history) {
-            const newHistory = new RouteHistory({ route, avgCrowdScore: feedbackScore, count: 1 });
+            const newHistory = new RouteHistory({ mode, line, station, avgCrowdScore: feedbackScore, count: 1 });
             await newHistory.save();
         } else {
             // Incremental Learning Formula
